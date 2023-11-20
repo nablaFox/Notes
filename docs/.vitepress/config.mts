@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "UniNotes",
   description: "Cured Knowledge",
+  base: '/Notes/',
   markdown: {
 	  math: true
   },
