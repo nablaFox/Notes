@@ -137,3 +137,9 @@
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
 
+.MathJax[display="true"] {
+	margin: 0!important; 
+}
+.MathJax[display="true"] > svg {
+		margin: 0!important;
+} 

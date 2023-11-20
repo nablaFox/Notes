@@ -4,22 +4,18 @@ layout: home
 
 hero:
   name: "UniNotes"
-  text: "Cured Knowledge"
-  tagline: My great project tagline
+  text: "Curated Knowledge"
+  tagline: They did not know it was impossible, so they did it!
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
-    - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: See My Notes
+      link: /courses
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: A personal Project
+    details: No experts, no pretense, just pure learning fun. This website features a collection of university notes made by none, with love ❤️
+  - title: The Feymann Method
+    details: If you can't explain a concept simply enough for your grandmother to understand, you haven't truly grasped it. You won't find lengthy lessons here; only neat and simple insights. That's my challenge.
+    
 ---
 
