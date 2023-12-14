@@ -43,4 +43,4 @@ run:
 	./$(BIN)
 
 clean:
-	rm -rf $(OBJ) $(BIN_PATH)
+	rm -rf $(OBJ) $(BIN_PATH) *.o

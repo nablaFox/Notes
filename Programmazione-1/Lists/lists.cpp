@@ -25,7 +25,7 @@ void deinit(node*& head) {
 void print(node* head) {
 	int i = 0;
 	for (; head != nullptr; head = head->next) {
-		std::cout << "Element " << i++ << ": " << head->data << std::endl;
+		std::cout << "Alement " << i++ << ": " << head->data << std::endl;
 	}
 }
 

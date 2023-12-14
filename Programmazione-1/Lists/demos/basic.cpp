@@ -21,6 +21,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	print(list);
+	deinit(list);
 
 	return 0;
 }
