@@ -3,9 +3,9 @@
 
 static bool empty(list::node*& head) { return head == nullptr; }
 
-static list::node* create_node(list::node* next, int data) {
+static list::node* create_node(list::node* next, list::data data) {
 	list::node* new_node = new list::node;
-	new_node->data = data;
+	new_node->c_data = data;
 	new_node->next = next;
 	return new_node;
 }
@@ -15,7 +15,7 @@ namespace list {
 void init(node*& head) { head = nullptr; }
 
 void deinit(node*& head) {
-	while (head != nullptr) {
+	while (!empty(head)) {
 		node* tmp = head;
 		head = head->next;
 		delete tmp;
@@ -24,26 +24,28 @@ void deinit(node*& head) {
 
 void print(node* head) {
 	int i = 0;
-	for (; head != nullptr; head = head->next) {
-		std::cout << "Alement " << i++ << ": " << head->data << std::endl;
+	for (; !empty(head); head = head->next) {
+		std::cout << "Element " << i++ << ": ";
+		print_node(head->c_data);
+		std::cout << std::endl;
 	}
 }
 
 int length(node* head) {
 	int result = 0;
 
-	for (; head != nullptr; head = head->next)
+	for (; !empty(head); head = head->next)
 		result++;
 
 	return result;
 }
 
-void insert_first(node*& head, int data) {
+void insert_first(node*& head, data data) {
 	node* new_node = create_node(head, data);
 	head = new_node;
 }
 
-void insert_last(node*& head, int data) {
+void insert_last(node*& head, data data) {
 	node* new_node = create_node(nullptr, data);
 
 	if (empty(head)) {
@@ -58,14 +60,14 @@ void insert_last(node*& head, int data) {
 	tmp->next = new_node;
 }
 
-void insert_order(node*& head, int data) {
-	if (empty(head) || data <= head->data) {
+void insert_order(node*& head, data data) {
+	if (empty(head) || compare(data, head->c_data) <= 0) {
 		return insert_first(head, data);
 	}
 
 	node* tmp = head;
 
-	while ((tmp->next != nullptr) && (tmp->next->data <= data))
+	while (tmp->next != nullptr && compare(data, tmp->next->c_data) > 0)
 		tmp = tmp->next;
 
 	node* new_node = create_node(tmp->next, data);
@@ -81,17 +83,35 @@ void remove_first(node*& head) {
 	delete tmp;
 }
 
-void remove_element(node*& head, int data) {
+void remove_last(node*& head) {
+	if (empty(head))
+		return;
+
+	if (empty(head->next)) {
+		delete head;
+		head = nullptr;
+		return;
+	}
+
+	node* tmp = head;
+	while (tmp->next->next != nullptr)
+		tmp = tmp->next;
+
+	delete tmp->next;
+	tmp->next = nullptr;
+}
+
+void remove_element(node*& head, data data) {
 	if (empty(head))
 		return;
 
 	node* tmp = head;
 	while (tmp->next != nullptr) {
-		if (tmp->data == data) {
+		if (compare(tmp->c_data, data) == 0) {
 			head = head->next;
 			return delete tmp;
 		}
-		if (tmp->next->data == data) {
+		if (compare(tmp->next->c_data, data) == 0) {
 			node* to_delete = tmp->next;
 			tmp->next = tmp->next->next;
 			delete to_delete;
@@ -121,8 +141,8 @@ node* reverse(node* head) {
 node* reverse_copy(node* head) {
 	node* list = nullptr;
 
-	while (head != nullptr) {
-		node* new_node = create_node(list, head->data);
+	while (!empty(head)) {
+		node* new_node = create_node(list, head->c_data);
 		list = new_node;
 		head = head->next;
 	}
@@ -134,7 +154,7 @@ node* find_node(node* head, int index) {
 	if (index < 0 || empty(head))
 		return nullptr;
 
-	for (int i = 0; head != nullptr && i < index; i++) {
+	for (int i = 0; !empty(head) && i < index; i++) {
 		head = head->next;
 	}
 
@@ -142,16 +162,16 @@ node* find_node(node* head, int index) {
 }
 
 node* prev_node(node* head, node* x) {
-	if (head == nullptr || head == x)
+	if (empty(head) || head == x)
 		return nullptr;
 
 	node* prev = head;
-	while (head != nullptr && head != x) {
+	while (!empty(head) && head != x) {
 		prev = head;
 		head = head->next;
 	}
 
-	if (head == nullptr)
+	if (empty(head))
 		return nullptr;
 
 	return prev;
@@ -163,8 +183,8 @@ node* copy(node* head) {
 
 	node* list = nullptr;
 
-	while (head != nullptr) {
-		insert_last(list, head->data);
+	while (!empty(head)) {
+		insert_last(list, head->c_data);
 		head = head->next;
 	}
 

@@ -15,14 +15,17 @@ void deinit(node*& head) {
 	delete head;
 }
 
-void print(node* head) {
-	static int i = 0;
+static void print_helper(node* head, int i) {
 	if (empty(head))
 		return;
 
-	std::cout << "Element: " << i++ << ": " << head->data << std::endl;
-	print(head->next);
+	std::cout << "Element " << i << ": ";
+	print_node(head->c_data);
+	std::cout << std::endl;
+	print_helper(head->next, i + 1);
 }
+
+void print(node* head) { print_helper(head, 0); }
 
 int length(node* head) {
 	if (empty(head))
@@ -31,19 +34,19 @@ int length(node* head) {
 	return length(head->next) + 1;
 }
 
-static node* create_node(node* next, int data) {
+static node* create_node(node* next, data data) {
 	node* new_node = new node;
-	new_node->data = data;
+	new_node->c_data = data;
 	new_node->next = next;
 	return new_node;
 }
 
-void insert_first(node*& head, int data) {
+void insert_first(node*& head, data data) {
 	node* new_node = create_node(head, data);
 	head = new_node;
 }
 
-void insert_last(node*& head, int data) {
+void insert_last(node*& head, data data) {
 	if (!empty(head)) {
 		return insert_last(head->next, data);
 	}
@@ -51,11 +54,11 @@ void insert_last(node*& head, int data) {
 	head = create_node(nullptr, data);
 }
 
-void insert_order(node*& head, int data) {
-	if (empty(head) || data <= head->data)
+void insert_order(node*& head, data data) {
+	if (empty(head) || compare(data, head->c_data) <= 0)
 		return insert_first(head, data);
 
-	if (empty(head->next) && head->next->data <= data) {
+	if (empty(head->next) && compare(data, head->next->c_data) <= 0) {
 		head->next = create_node(head->next, data);
 		return;
 	}
@@ -72,24 +75,30 @@ void remove_first(node*& head) {
 	delete tmp;
 }
 
-void remove_element(node*& head, int data) {
-	if (empty(head)) {
+void remove_last(node*& head) {
+	if (empty(head))
+		return;
+
+	if (empty(head->next)) {
+		delete head;
+		head = nullptr;
 		return;
 	}
 
-	if (head->data == data) {
+	remove_last(head->next);
+}
+
+void remove_element(node*& head, data data) {
+	if (empty(head))
+		return;
+
+	if (compare(head->c_data, data) == 0) {
 		node* to_delete = head;
 		head = head->next;
-		return delete to_delete;
+		delete to_delete;
+	} else {
+		remove_element(head->next, data);
 	}
-
-	if (empty(head->next) && head->next->data == data) {
-		node* to_delete = head->next;
-		head->next = head->next->next;
-		return delete to_delete;
-	}
-
-	remove_element(head->next, data);
 }
 
 static node* reverse_helper(node* curr, node* prev) {
@@ -108,21 +117,22 @@ static node* reverse_copy_helper(node* head, node* list) {
 		return list;
 	}
 
-	node* new_node = create_node(list, head->data);
+	node* new_node = create_node(list, head->c_data);
 	return reverse_copy_helper(head->next, new_node);
 }
 
 node* reverse_copy(node* head) { return reverse_copy_helper(head, nullptr); }
 
 node* find_node(node* head, int index) {
-	if (index <= 0 || empty(head))
-		return head;
+	if (empty(head) || index < 0) {
+		return nullptr;
+	}
 
-	return find_node(head->next, index - 1);
+	return index == 0 ? head : find_node(head->next, index - 1);
 }
 
 node* prev_node(node* head, node* x) {
-	if (empty(head))
+	if (empty(head) || empty(x))
 		return nullptr;
 
 	if (!empty(head) && head->next == x) {
@@ -138,7 +148,7 @@ node* copy(node* head) {
 	}
 
 	node* copied = new node;
-	copied->data = head->data;
+	copied->c_data = head->c_data;
 	copied->next = copy(head->next);
 	return copied;
 }
@@ -159,7 +169,7 @@ node* concat_copy(node* head1, node* head2) {
 		return copy(head2);
 
 	node* concat_list = new node;
-	concat_list->data = head1->data;
+	concat_list->c_data = head1->c_data;
 	concat_list->next = concat_copy(head1->next, head2);
 	return concat_list;
 }

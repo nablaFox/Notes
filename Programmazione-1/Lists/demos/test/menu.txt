@@ -1,0 +1,17 @@
+Length
+Print
+Insert first
+Insert last
+Insert order
+Remove first
+Remove last
+Remove element
+Reverse
+Reverse copy
+Find node
+Prev node
+Copy
+Concat
+Concat copy
+Show menu
+Exit

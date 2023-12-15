@@ -14,12 +14,11 @@ IMPL_FILE = $(filter-out $(IMPL), lists.cpp lists_rec.cpp)
 
 # user choice of demo
 ifndef DEMO
-  DEMO_SRC = $(wildcard $(DEMOS_PATH)/basic.cpp)
-else ifeq ($(wildcard $(DEMOS_PATH)/$(DEMO)/*),) 
-  DEMO_SRC = $(wildcard $(DEMOS_PATH)/$(DEMO).cpp)
-else
-  DEMO_SRC = $(wildcard $(DEMOS_PATH)/$(DEMO)/*.cpp) 
+	DEMO = test
 endif
+
+DEMO_SRC = $(wildcard $(DEMOS_PATH)/$(DEMO)/*.cpp)
+CFLAGS += -include $(wildcard $(DEMOS_PATH)/$(DEMO)/*.hpp)
 
 # files
 BIN = $(BIN_PATH)/test
@@ -29,7 +28,7 @@ OBJ = $(SRC:.cpp=.o)
 # rules
 .PHONY: all clean
 
-all: demo run clean
+all: clean demo run clean
 
 demo: $(OBJ)
 	mkdir -p $(BIN_PATH)
