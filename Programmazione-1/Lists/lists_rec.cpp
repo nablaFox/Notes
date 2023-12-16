@@ -66,6 +66,16 @@ void insert_order(node*& head, data data) {
 	insert_order(head->next, data);
 }
 
+void insert_at(node*& head, data data, int index) {
+	if (index <= 0 || empty(head))
+		return insert_first(head, data);
+
+	if (index > 0)
+		return insert_at(head->next, data, index - 1);
+
+	head->next = create_node(head->next, data);
+}
+
 void remove_first(node*& head) {
 	if (empty(head))
 		return;
@@ -86,6 +96,18 @@ void remove_last(node*& head) {
 	}
 
 	remove_last(head->next);
+}
+
+void remove_at(node*& head, int index) {
+	if (index <= 0 || empty(head))
+		return remove_first(head);
+
+	if (index > 1 && !empty(head->next->next))
+		return remove_at(head->next, index - 1);
+
+	node* to_delete = head->next;
+	head->next = head->next->next;
+	delete to_delete;
 }
 
 void remove_element(node*& head, data data) {

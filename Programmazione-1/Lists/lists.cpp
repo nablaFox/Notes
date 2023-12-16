@@ -46,18 +46,15 @@ void insert_first(node*& head, data data) {
 }
 
 void insert_last(node*& head, data data) {
-	node* new_node = create_node(nullptr, data);
-
 	if (empty(head)) {
-		head = new_node;
-		return;
+		return insert_first(head, data);
 	}
 
 	node* tmp = head;
 	while (tmp->next != nullptr)
 		tmp = tmp->next;
 
-	tmp->next = new_node;
+	tmp->next = create_node(nullptr, data);
 }
 
 void insert_order(node*& head, data data) {
@@ -66,12 +63,23 @@ void insert_order(node*& head, data data) {
 	}
 
 	node* tmp = head;
-
 	while (tmp->next != nullptr && compare(data, tmp->next->c_data) > 0)
 		tmp = tmp->next;
 
-	node* new_node = create_node(tmp->next, data);
-	tmp->next = new_node;
+	tmp->next = create_node(tmp->next, data);
+}
+
+void insert_at(node*& head, data data, int index) {
+	if (index <= 0 || empty(head))
+		return insert_first(head, data);
+
+	node* tmp = head;
+	while (tmp->next != nullptr && index != 0) {
+		tmp = tmp->next;
+		index--;
+	}
+
+	tmp->next = create_node(tmp->next, data);
 }
 
 void remove_first(node*& head) {
@@ -99,6 +107,21 @@ void remove_last(node*& head) {
 
 	delete tmp->next;
 	tmp->next = nullptr;
+}
+
+void remove_at(node*& head, int index) {
+	if (index <= 0 || empty(head))
+		return remove_first(head);
+
+	node* tmp = head;
+	while (tmp->next->next != nullptr && index != 1) {
+		tmp = tmp->next;
+		index--;
+	}
+
+	node* to_delete = tmp->next;
+	tmp->next = tmp->next->next;
+	delete to_delete;
 }
 
 void remove_element(node*& head, data data) {

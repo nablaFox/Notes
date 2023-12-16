@@ -3,8 +3,10 @@ Print
 Insert first
 Insert last
 Insert order
+Insert at
 Remove first
 Remove last
+Remove at
 Remove element
 Reverse
 Reverse copy
@@ -14,4 +16,3 @@ Copy
 Concat
 Concat copy
 Show menu
-Exit

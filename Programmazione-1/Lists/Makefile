@@ -8,21 +8,20 @@ DEMOS_PATH = demos
 
 # user choice of implementation
 ifndef IMPL
-	IMPL = lists.cpp
+	IMPL = lists
 endif
-IMPL_FILE = $(filter-out $(IMPL), lists.cpp lists_rec.cpp)
 
 # user choice of demo
 ifndef DEMO
 	DEMO = test
 endif
 
-DEMO_SRC = $(wildcard $(DEMOS_PATH)/$(DEMO)/*.cpp)
-CFLAGS += -include $(wildcard $(DEMOS_PATH)/$(DEMO)/*.hpp)
+CFLAGS += -include $(wildcard $(DEMOS_PATH)/$(DEMO)/demo_list.hpp)
 
 # files
 BIN = $(BIN_PATH)/test
-SRC = $(filter-out $(IMPL_FILE), $(wildcard *.cpp)) $(DEMO_SRC) 
+SRC = $(IMPL) $(DEMO_SRC) 
+DEMO_SRC = $(wildcard $(DEMOS_PATH)/$(DEMO)/*.cpp)
 OBJ = $(SRC:.cpp=.o)
 
 # rules
