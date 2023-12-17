@@ -1,14 +1,14 @@
+#include <cstdlib>
 #include <iostream>
 #include "demo_test.hpp"
 
-int main() {
+int main(int argc, char** argv) {
 	srand(time(NULL));
 
 	list::node* list;
-	init_list(list, 10);
 
-	app(list);
+	app(list, argc, argv);
 
-	list::deinit(list);
+	deinit(list);
 	return 0;
 }
