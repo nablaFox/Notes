@@ -8,7 +8,7 @@ DEMOS_PATH = demos
 
 # user choice of implementation
 ifndef IMPL
-	IMPL = lists
+	IMPL = list.cpp
 endif
 
 # user choice of demo
@@ -27,7 +27,7 @@ OBJ = $(SRC:.cpp=.o)
 # rules
 .PHONY: all clean
 
-all: clean demo run clean
+all: clean demo
 
 demo: $(OBJ)
 	mkdir -p $(BIN_PATH)
@@ -37,7 +37,6 @@ demo: $(OBJ)
 	$(CXX) $(CFLAGS) -c $< -o $@
 
 run:
-	[ -f $(BIN) ] || make test IMPL=$(IMPL)
 	./$(BIN)
 
 clean:

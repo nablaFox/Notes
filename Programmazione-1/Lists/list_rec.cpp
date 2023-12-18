@@ -1,4 +1,4 @@
-#include "lists.hpp"
+#include "list.hpp"
 #include <iostream>
 
 static bool empty(list::node*& head) { return head == nullptr; }
@@ -20,7 +20,7 @@ static void print_helper(node* head, int i) {
 		return;
 
 	std::cout << "Element " << i << ": ";
-	print_node(head->c_data);
+	print_data(head->c_data);
 	std::cout << std::endl;
 	print_helper(head->next, i + 1);
 }
@@ -55,10 +55,10 @@ void insert_last(node*& head, data data) {
 }
 
 void insert_order(node*& head, data data) {
-	if (empty(head) || compare(data, head->c_data) <= 0)
+	if (empty(head) || compare_data(data, head->c_data) <= 0)
 		return insert_first(head, data);
 
-	if (empty(head->next) && compare(data, head->next->c_data) <= 0) {
+	if (!empty(head->next) && compare_data(data, head->next->c_data) <= 0) {
 		head->next = create_node(head->next, data);
 		return;
 	}
@@ -114,7 +114,7 @@ void remove_element(node*& head, data data) {
 	if (empty(head))
 		return;
 
-	if (compare(head->c_data, data) == 0) {
+	if (compare_data(head->c_data, data) == 0) {
 		node* to_delete = head;
 		head = head->next;
 		delete to_delete;

@@ -1,4 +1,4 @@
-#include "lists.hpp"
+#include "list.hpp"
 #include <iostream>
 
 static bool empty(list::node*& head) { return head == nullptr; }
@@ -26,7 +26,7 @@ void print(node* head) {
 	int i = 0;
 	for (; !empty(head); head = head->next) {
 		std::cout << "Element " << i++ << ": ";
-		print_node(head->c_data);
+		print_data(head->c_data);
 		std::cout << std::endl;
 	}
 }
@@ -58,12 +58,11 @@ void insert_last(node*& head, data data) {
 }
 
 void insert_order(node*& head, data data) {
-	if (empty(head) || compare(data, head->c_data) <= 0) {
+	if (empty(head) || compare_data(data, head->c_data) <= 0)
 		return insert_first(head, data);
-	}
 
 	node* tmp = head;
-	while (tmp->next != nullptr && compare(data, tmp->next->c_data) > 0)
+	while (tmp->next != nullptr && compare_data(data, tmp->next->c_data) > 0)
 		tmp = tmp->next;
 
 	tmp->next = create_node(tmp->next, data);
@@ -130,11 +129,11 @@ void remove_element(node*& head, data data) {
 
 	node* tmp = head;
 	while (tmp->next != nullptr) {
-		if (compare(tmp->c_data, data) == 0) {
+		if (compare_data(tmp->c_data, data) == 0) {
 			head = head->next;
 			return delete tmp;
 		}
-		if (compare(tmp->next->c_data, data) == 0) {
+		if (compare_data(tmp->next->c_data, data) == 0) {
 			node* to_delete = tmp->next;
 			tmp->next = tmp->next->next;
 			delete to_delete;
@@ -152,10 +151,10 @@ node* reverse(node* head) {
 	node* next = nullptr;
 
 	while (curr != nullptr) {
-		next = curr->next; // Store next
-		curr->next = prev; // Reverse current node's pointer
-		prev = curr;	   // Move pointers one position ahead.
-		curr = next;	   // Move pointers one position ahead.
+		next = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = next;
 	}
 
 	return prev;
@@ -204,14 +203,16 @@ node* copy(node* head) {
 	if (empty(head))
 		return nullptr;
 
-	node* list = nullptr;
+	node* copied = create_node(nullptr, head->c_data);
+	node* new_head = copied;
 
-	while (!empty(head)) {
-		insert_last(list, head->c_data);
+	while (!empty(head->next)) {
+		copied->next = create_node(nullptr, head->next->c_data);
+		copied = copied->next;
 		head = head->next;
 	}
 
-	return list;
+	return new_head;
 }
 
 node* concat(node* head1, node* head2) {

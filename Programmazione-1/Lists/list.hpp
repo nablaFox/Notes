@@ -10,8 +10,8 @@ struct node {
 void init(node*&);
 void deinit(node*&);
 int length(node*);
-void print_node(const data& data);
-int compare(const data& data1, const data& data2);
+void print_data(const data& data);
+int compare_data(const data& data1, const data& data2);
 void print(node*);
 void insert_first(node*&, data);
 void insert_last(node*&, data);

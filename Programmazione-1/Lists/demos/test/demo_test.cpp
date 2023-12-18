@@ -7,7 +7,7 @@
 using namespace std;
 
 // demo list implementation
-void list::print_data(const custom& data) { std::cout << "a: " << data.a << ", b: " << data.b; }
+void list::print_data(const custom& data) { cout << "a: " << data.a << ", b: " << data.b; }
 int list::compare_data(const custom& data1, const custom& data2) { return data1.a - data2.a; }
 
 // demo app
