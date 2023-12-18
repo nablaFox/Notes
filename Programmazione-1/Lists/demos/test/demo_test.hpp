@@ -4,5 +4,5 @@
 custom get_user_data();
 custom get_random_data();
 const char* get_menu(const char* filename);
-void init_list(list::node*& list, int size);
-void app(list::node*& list, int argc, char** argv);
+void init_list(list::Node*& list, int size);
+void app(list::Node*& list, int argc, char** argv);

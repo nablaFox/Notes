@@ -1,13 +1,13 @@
 #include "list.hpp"
 #include <iostream>
 
-static bool empty(list::node*& head) { return head == nullptr; }
+static bool empty(list::Node*& head) { return head == nullptr; }
 
 namespace list {
 
-void init(node*& head) { head = nullptr; }
+void init(Node*& head) { head = nullptr; }
 
-void deinit(node*& head) {
+void deinit(Node*& head) {
 	if (!empty(head)) {
 		deinit(head->next);
 	}
@@ -15,7 +15,7 @@ void deinit(node*& head) {
 	delete head;
 }
 
-static void print_helper(node* head, int i) {
+static void print_helper(Node* head, int i) {
 	if (empty(head))
 		return;
 
@@ -25,28 +25,28 @@ static void print_helper(node* head, int i) {
 	print_helper(head->next, i + 1);
 }
 
-void print(node* head) { print_helper(head, 0); }
+void print(Node* head) { print_helper(head, 0); }
 
-int length(node* head) {
+int length(Node* head) {
 	if (empty(head))
 		return 0;
 
 	return length(head->next) + 1;
 }
 
-static node* create_node(node* next, data data) {
-	node* new_node = new node;
+static Node* create_node(Node* next, data data) {
+	Node* new_node = new Node;
 	new_node->c_data = data;
 	new_node->next = next;
 	return new_node;
 }
 
-void insert_first(node*& head, data data) {
-	node* new_node = create_node(head, data);
+void insert_first(Node*& head, data data) {
+	Node* new_node = create_node(head, data);
 	head = new_node;
 }
 
-void insert_last(node*& head, data data) {
+void insert_last(Node*& head, data data) {
 	if (!empty(head)) {
 		return insert_last(head->next, data);
 	}
@@ -54,7 +54,7 @@ void insert_last(node*& head, data data) {
 	head = create_node(nullptr, data);
 }
 
-void insert_order(node*& head, data data) {
+void insert_order(Node*& head, data data) {
 	if (empty(head) || compare_data(data, head->c_data) <= 0)
 		return insert_first(head, data);
 
@@ -66,7 +66,7 @@ void insert_order(node*& head, data data) {
 	insert_order(head->next, data);
 }
 
-void insert_at(node*& head, data data, int index) {
+void insert_at(Node*& head, data data, int index) {
 	if (index <= 0 || empty(head))
 		return insert_first(head, data);
 
@@ -76,16 +76,16 @@ void insert_at(node*& head, data data, int index) {
 	head->next = create_node(head->next, data);
 }
 
-void remove_first(node*& head) {
+void remove_first(Node*& head) {
 	if (empty(head))
 		return;
 
-	node* tmp = head;
+	Node* tmp = head;
 	head = head->next;
 	delete tmp;
 }
 
-void remove_last(node*& head) {
+void remove_last(Node*& head) {
 	if (empty(head))
 		return;
 
@@ -98,24 +98,24 @@ void remove_last(node*& head) {
 	remove_last(head->next);
 }
 
-void remove_at(node*& head, int index) {
+void remove_at(Node*& head, int index) {
 	if (index <= 0 || empty(head))
 		return remove_first(head);
 
 	if (index > 1 && !empty(head->next->next))
 		return remove_at(head->next, index - 1);
 
-	node* to_delete = head->next;
+	Node* to_delete = head->next;
 	head->next = head->next->next;
 	delete to_delete;
 }
 
-void remove_element(node*& head, data data) {
+void remove_element(Node*& head, data data) {
 	if (empty(head))
 		return;
 
 	if (compare_data(head->c_data, data) == 0) {
-		node* to_delete = head;
+		Node* to_delete = head;
 		head = head->next;
 		delete to_delete;
 	} else {
@@ -123,29 +123,29 @@ void remove_element(node*& head, data data) {
 	}
 }
 
-static node* reverse_helper(node* curr, node* prev) {
+static Node* reverse_helper(Node* curr, Node* prev) {
 	if (empty(curr))
 		return prev;
 
-	node* next = curr->next;
+	Node* next = curr->next;
 	curr->next = prev;
 	return reverse_helper(next, curr);
 }
 
-node* reverse(node* head) { return reverse_helper(head, nullptr); }
+Node* reverse(Node* head) { return reverse_helper(head, nullptr); }
 
-static node* reverse_copy_helper(node* head, node* list) {
+static Node* reverse_copy_helper(Node* head, Node* list) {
 	if (empty(head)) {
 		return list;
 	}
 
-	node* new_node = create_node(list, head->c_data);
+	Node* new_node = create_node(list, head->c_data);
 	return reverse_copy_helper(head->next, new_node);
 }
 
-node* reverse_copy(node* head) { return reverse_copy_helper(head, nullptr); }
+Node* reverse_copy(Node* head) { return reverse_copy_helper(head, nullptr); }
 
-node* find_node(node* head, int index) {
+Node* find_node(Node* head, int index) {
 	if (empty(head) || index < 0) {
 		return nullptr;
 	}
@@ -153,7 +153,7 @@ node* find_node(node* head, int index) {
 	return index == 0 ? head : find_node(head->next, index - 1);
 }
 
-node* prev_node(node* head, node* x) {
+Node* prev_node(Node* head, Node* x) {
 	if (empty(head) || empty(x))
 		return nullptr;
 
@@ -164,18 +164,18 @@ node* prev_node(node* head, node* x) {
 	return prev_node(head->next, x);
 }
 
-node* copy(node* head) {
+Node* copy(Node* head) {
 	if (empty(head)) {
 		return nullptr;
 	}
 
-	node* copied = new node;
+	Node* copied = new Node;
 	copied->c_data = head->c_data;
 	copied->next = copy(head->next);
 	return copied;
 }
 
-node* concat(node* head1, node* head2) {
+Node* concat(Node* head1, Node* head2) {
 	if (empty(head1))
 		return head2;
 
@@ -186,11 +186,11 @@ node* concat(node* head1, node* head2) {
 	return head1;
 }
 
-node* concat_copy(node* head1, node* head2) {
+Node* concat_copy(Node* head1, Node* head2) {
 	if (empty(head1))
 		return copy(head2);
 
-	node* concat_list = new node;
+	Node* concat_list = new Node;
 	concat_list->c_data = head1->c_data;
 	concat_list->next = concat_copy(head1->next, head2);
 	return concat_list;

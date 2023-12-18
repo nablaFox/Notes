@@ -11,7 +11,7 @@ void list::print_data(const custom& data) { cout << "a: " << data.a << ", b: " <
 int list::compare_data(const custom& data1, const custom& data2) { return data1.a - data2.a; }
 
 // demo app
-void init_list(list::node*& list, int size) {
+void init_list(list::Node*& list, int size) {
 	init(list);
 
 	for (int i = 0; i < size; i++) {
@@ -89,7 +89,7 @@ const char* get_menu(const char* filename) {
 	return menu;
 }
 
-void init_app(list::node*& list, int argc, char** argv, const int default_size = 10) {
+void init_app(list::Node*& list, int argc, char** argv, const int default_size = 10) {
 	CliOpts opts = parse_opts(argc, argv);
 
 	if (opts.help) {
@@ -113,7 +113,7 @@ void init_app(list::node*& list, int argc, char** argv, const int default_size =
 	init_list(list, size);
 }
 
-void run(list::node*& list, const char* menu) {
+void run(list::Node*& list, const char* menu) {
 	const char exit = 'z';
 	char option;
 	int index;
@@ -171,7 +171,7 @@ void run(list::node*& list, const char* menu) {
 		case 'm': {
 			cout << "Index: ";
 			cin >> index;
-			list::node* found = find_node(list, index);
+			list::Node* found = find_node(list, index);
 			if (found == nullptr) {
 				cout << "No node found" << endl;
 				break;
@@ -182,7 +182,7 @@ void run(list::node*& list, const char* menu) {
 		case 'n': {
 			cout << "Index: ";
 			cin >> index;
-			list::node* prev = prev_node(list, find_node(list, index));
+			list::Node* prev = prev_node(list, find_node(list, index));
 			if (prev == nullptr) {
 				cout << "No previous node" << endl;
 				break;
@@ -218,7 +218,7 @@ void run(list::node*& list, const char* menu) {
 	} while (option != exit);
 }
 
-void app(list::node*& list, int argc, char** argv) {
+void app(list::Node*& list, int argc, char** argv) {
 	init_app(list, argc, argv);
 
 	const char* menu = get_menu("demos/test/menu.txt");

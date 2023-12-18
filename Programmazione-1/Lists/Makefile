@@ -8,7 +8,7 @@ DEMOS_PATH = demos
 
 # user choice of implementation
 ifndef IMPL
-	IMPL = list.cpp
+	IMPL = list
 endif
 
 # user choice of demo
@@ -16,11 +16,11 @@ ifndef DEMO
 	DEMO = test
 endif
 
-CFLAGS += -include $(wildcard $(DEMOS_PATH)/$(DEMO)/demo_list.hpp)
+CFLAGS += -include $(DEMOS_PATH)/$(DEMO)/demo_list.hpp
 
 # files
 BIN = $(BIN_PATH)/test
-SRC = $(IMPL) $(DEMO_SRC) 
+SRC = $(IMPL).cpp $(DEMO_SRC) 
 DEMO_SRC = $(wildcard $(DEMOS_PATH)/$(DEMO)/*.cpp)
 OBJ = $(SRC:.cpp=.o)
 

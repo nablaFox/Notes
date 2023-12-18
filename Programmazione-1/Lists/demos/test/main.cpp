@@ -5,7 +5,7 @@
 int main(int argc, char** argv) {
 	srand(time(NULL));
 
-	list::node* list;
+	list::Node* list;
 
 	app(list, argc, argv);
 

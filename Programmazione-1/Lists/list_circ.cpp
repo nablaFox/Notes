@@ -2,12 +2,12 @@
 #include <iostream>
 #include <iterator>
 
-static bool empty(list::node*& head) { return head == nullptr; }
+static bool empty(list::Node*& head) { return head == nullptr; }
 
-static bool single(list::node*& head) { return head->next == head; }
+static bool single(list::Node*& head) { return head->next == head; }
 
-static list::node* create_node(list::node* next, list::data data) {
-	list::node* new_node = new list::node;
+static list::Node* create_node(list::Node* next, list::data data) {
+	list::Node* new_node = new list::Node;
 	new_node->c_data = data;
 	new_node->next = next;
 	return new_node;
@@ -15,27 +15,27 @@ static list::node* create_node(list::node* next, list::data data) {
 
 namespace list {
 
-void init(node*& head) { head = nullptr; }
+void init(Node*& head) { head = nullptr; }
 
-void deinit(node*& head) {
+void deinit(Node*& head) {
 	if (empty(head))
 		return;
 
-	node* start = head;
+	Node* start = head;
 
 	do {
-		node* tmp = head;
+		Node* tmp = head;
 		head = head->next;
 		delete tmp;
 	} while (head != start);
 }
 
-int length(node* head) {
+int length(Node* head) {
 	if (empty(head))
 		return 0;
 
 	int count = 0;
-	node* start = head;
+	Node* start = head;
 
 	do {
 		head = head->next;
@@ -45,12 +45,12 @@ int length(node* head) {
 	return count;
 }
 
-void print(node* head) {
+void print(Node* head) {
 	if (empty(head))
 		return;
 
 	int count = 0;
-	node* start = head;
+	Node* start = head;
 
 	do {
 		std::cout << "Element " << count++ << ": ";
@@ -60,49 +60,49 @@ void print(node* head) {
 	} while (head != start);
 }
 
-static void insert_at_empty(node*& head, data data) {
+static void insert_at_empty(Node*& head, data data) {
 	if (!empty(head))
 		return;
 
-	head = new node;
+	head = new Node;
 	head->c_data = data;
 	head->next = head;
 }
 
-void insert_first(node*& head, data data) {
+void insert_first(Node*& head, data data) {
 	if (empty(head)) {
 		return insert_at_empty(head, data);
 	}
 
-	node* tmp = head;
+	Node* tmp = head;
 	while (tmp->next != head) {
 		tmp = tmp->next;
 	}
 
-	node* new_node = create_node(head, data);
+	Node* new_node = create_node(head, data);
 	head = new_node;
 	tmp->next = new_node;
 }
 
-void insert_last(node*& head, data data) {
+void insert_last(Node*& head, data data) {
 	if (empty(head)) {
 		return insert_at_empty(head, data);
 	}
 
-	node* tmp = head;
+	Node* tmp = head;
 	while (tmp->next != head) {
 		tmp = tmp->next;
 	}
 
-	node* new_node = create_node(tmp->next, data);
+	Node* new_node = create_node(tmp->next, data);
 	tmp->next = new_node;
 }
 
-void insert_at(node*& head, data data, int index) {
+void insert_at(Node*& head, data data, int index) {
 	if (empty(head) || index <= 0)
 		return insert_first(head, data);
 
-	node* tmp = head;
+	Node* tmp = head;
 	while (index != 0) {
 		tmp = tmp->next;
 		index--;
@@ -111,12 +111,12 @@ void insert_at(node*& head, data data, int index) {
 	tmp->next = create_node(tmp->next, data);
 }
 
-void insert_order(node*& head, data data) {
+void insert_order(Node*& head, data data) {
 	if (empty(head) || compare_data(data, head->c_data) <= 0) {
 		return insert_first(head, data);
 	}
 
-	node* curr = head;
+	Node* curr = head;
 	while (curr->next != head && compare_data(data, curr->next->c_data) > 0) {
 		curr = curr->next;
 	}
@@ -124,22 +124,22 @@ void insert_order(node*& head, data data) {
 	curr->next = create_node(curr->next, data);
 };
 
-static void delete_single(node*& head) {
+static void delete_single(Node*& head) {
 	delete head;
 	head = nullptr;
 }
 
-void remove_first(node*& head) {
+void remove_first(Node*& head) {
 	if (empty(head))
 		return;
 
 	if (single(head))
 		return delete_single(head);
 
-	node* to_delete = head;
+	Node* to_delete = head;
 	head = head->next;
 
-	node* curr = head;
+	Node* curr = head;
 	while (curr->next != to_delete)
 		curr = curr->next;
 
@@ -147,23 +147,23 @@ void remove_first(node*& head) {
 	delete to_delete;
 }
 
-void remove_last(node*& head) {
+void remove_last(Node*& head) {
 	if (empty(head))
 		return;
 
 	if (single(head))
 		return delete_single(head);
 
-	node* curr = head;
+	Node* curr = head;
 	while (curr->next->next != head)
 		curr = curr->next;
 
-	node* to_delete = curr->next;
+	Node* to_delete = curr->next;
 	curr->next = head;
 	delete to_delete;
 }
 
-void remove_at(node*& head, int index) {
+void remove_at(Node*& head, int index) {
 	if (empty(head))
 		return;
 
@@ -172,8 +172,8 @@ void remove_at(node*& head, int index) {
 
 	index = index < 0 ? -index : index;
 
-	node* prev = head;
-	node* curr = head->next;
+	Node* prev = head;
+	Node* curr = head->next;
 
 	while (index != 1 && index != 0) {
 		prev = curr;
@@ -191,7 +191,7 @@ void remove_at(node*& head, int index) {
 	delete curr;
 }
 
-void remove_element(node*& head, data data) {
+void remove_element(Node*& head, data data) {
 	if (empty(head))
 		return;
 
@@ -202,8 +202,8 @@ void remove_element(node*& head, data data) {
 	if (compare_data(head->c_data, data) == 0)
 		return remove_first(head);
 
-	node* prev = head;
-	node* curr = head->next;
+	Node* prev = head;
+	Node* curr = head->next;
 
 	while (curr != head && compare_data(curr->c_data, data) != 0) {
 		prev = curr;
@@ -217,13 +217,13 @@ void remove_element(node*& head, data data) {
 	delete curr;
 }
 
-node* reverse(node* head) {
+Node* reverse(Node* head) {
 	if (empty(head) || single(head))
 		return head;
 
-	node* prev = nullptr;
-	node* curr = head;
-	node* next = nullptr;
+	Node* prev = nullptr;
+	Node* curr = head;
+	Node* next = nullptr;
 
 	do {
 		next = curr->next;
@@ -236,19 +236,19 @@ node* reverse(node* head) {
 	return prev;
 }
 
-node* reverse_copy(node* head) {
+Node* reverse_copy(Node* head) {
 	if (empty(head))
 		return head;
 
-	node* list = nullptr;
-	node* curr = head;
+	Node* list = nullptr;
+	Node* curr = head;
 
 	do {
 		list = create_node(list, curr->c_data);
 		curr = curr->next;
 	} while (curr != head);
 
-	node* list_tail = list;
+	Node* list_tail = list;
 	while (list_tail->next != nullptr)
 		list_tail = list_tail->next;
 
@@ -257,13 +257,13 @@ node* reverse_copy(node* head) {
 	return list;
 }
 
-node* find_node(node* head, int index) {
+Node* find_node(Node* head, int index) {
 	if (empty(head))
 		return nullptr;
 
 	index = index > 0 ? index : -index;
 
-	node* curr = head;
+	Node* curr = head;
 	while (index != 0) {
 		index--;
 		curr = curr->next;
@@ -272,26 +272,26 @@ node* find_node(node* head, int index) {
 	return curr;
 }
 
-node* prev_node(node* head, node* x) {
+Node* prev_node(Node* head, Node* x) {
 	if (empty(head) || single(x))
 		return head;
 
-	node* curr = head;
+	Node* curr = head;
 	while (curr->next != head && curr->next != x)
 		curr = curr->next;
 
 	return curr;
 }
 
-node* copy(node* head) {
+Node* copy(Node* head) {
 	if (empty(head))
 		return nullptr;
 
-	node* copied = nullptr;
+	Node* copied = nullptr;
 	insert_at_empty(copied, head->c_data);
 
-	node* new_head = copied;
-	node* curr = head->next;
+	Node* new_head = copied;
+	Node* curr = head->next;
 
 	while (curr != head) {
 		copied->next = create_node(new_head, curr->c_data);
@@ -302,14 +302,14 @@ node* copy(node* head) {
 	return new_head;
 }
 
-node* concat(node* head1, node* head2) {
+Node* concat(Node* head1, Node* head2) {
 	if (empty(head1))
 		return head2;
 
 	if (empty(head2))
 		return head1;
 
-	node* curr = head1;
+	Node* curr = head1;
 	while (curr->next != head1)
 		curr = curr->next;
 	curr->next = head2;
@@ -322,20 +322,20 @@ node* concat(node* head1, node* head2) {
 	return head1;
 }
 
-node* concat_copy(node* head1, node* head2) {
+Node* concat_copy(Node* head1, Node* head2) {
 	if (empty(head1))
 		return copy(head2);
 
 	if (empty(head2))
 		return copy(head1);
 
-	node* copied1 = copy(head1);
-	node* curr = copied1;
+	Node* copied1 = copy(head1);
+	Node* curr = copied1;
 
 	while (curr->next != copied1)
 		curr = curr->next;
 
-	node* copied2 = copy(head2);
+	Node* copied2 = copy(head2);
 	curr->next = copied2;
 	curr = copied2;
 

@@ -2,31 +2,31 @@
 
 namespace list {
 
-struct node {
+struct Node {
 	data c_data;
-	node* next;
+	Node* next;
 };
 
-void init(node*&);
-void deinit(node*&);
-int length(node*);
+void init(Node*&);
+void deinit(Node*&);
+int length(Node*);
 void print_data(const data& data);
 int compare_data(const data& data1, const data& data2);
-void print(node*);
-void insert_first(node*&, data);
-void insert_last(node*&, data);
-void insert_at(node*&, data, int index);
-void insert_order(node*&, data);
-void remove_first(node*&);
-void remove_last(node*&);
-void remove_at(node*&, int index);
-void remove_element(node*&, data);
-node* reverse(node*);
-node* reverse_copy(node*);
-node* find_node(node*, int);
-node* prev_node(node*, node*);
-node* copy(node*);
-node* concat(node*, node*);
-node* concat_copy(node*, node*);
+void print(Node*);
+void insert_first(Node*&, data);
+void insert_last(Node*&, data);
+void insert_at(Node*&, data, int index);
+void insert_order(Node*&, data);
+void remove_first(Node*&);
+void remove_last(Node*&);
+void remove_at(Node*&, int index);
+void remove_element(Node*&, data);
+Node* reverse(Node*);
+Node* reverse_copy(Node*);
+Node* find_node(Node*, int);
+Node* prev_node(Node*, Node*);
+Node* copy(Node*);
+Node* concat(Node*, Node*);
+Node* concat_copy(Node*, Node*);
 
 } // namespace list
