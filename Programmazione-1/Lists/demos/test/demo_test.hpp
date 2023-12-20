@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../../list.hpp"
 #include "demo_list.hpp"
 

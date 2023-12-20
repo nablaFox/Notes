@@ -1,3 +1,5 @@
+#pragma once
+
 struct CliOpts {
 	bool ask_size = false;
 	bool help = false;
