@@ -8,7 +8,7 @@ DEMOS_PATH = demos
 
 # user choice of implementation
 ifndef IMPL
-	IMPL = stack
+	IMPL = queue
 endif
 
 # user choice of demo
@@ -16,7 +16,7 @@ ifndef DEMO
 	DEMO = test
 endif
 
-CFLAGS += -include $(DEMOS_PATH)/$(DEMO)/demo_stack.hpp
+CFLAGS += -include $(DEMOS_PATH)/$(DEMO)/demo_queue.hpp
 CFLAGS += -include $(IMPL).hpp
 
 # files

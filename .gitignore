@@ -12,3 +12,4 @@ bin
 *.lib
 .nvim.lua
 compile_commands.json
+.env

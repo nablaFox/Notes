@@ -12,7 +12,6 @@ struct Stack {
 void init(Stack&);
 void deinit(Stack&);
 void print_data(const data& data);
-int compare_data(const data&, const data&);
 void print(const Stack&);
 result top(data&, const Stack&);
 result push(data, Stack&);

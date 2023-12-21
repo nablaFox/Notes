@@ -3,7 +3,6 @@
 using namespace std;
 using namespace stack;
 
-int stack::compare_data(const int& data1, const int& data2) { return data1 - data2; };
 void stack::print_data(const int& data) { cout << data; };
 
 int main(int argc, char* argv[]) {
