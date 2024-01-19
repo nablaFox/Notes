@@ -1,44 +1,20 @@
-# tool
-CXX = g++
-CFLAGS = -std=c++20 -Wall -Wextra -Wpedantic
+STACK_IMPL = test
+STACK_IMPL_LIST = 
+STACK_IMPL_STATIC = 
 
-# paths
-BIN_PATH = bin
-DEMOS_PATH = demos
-
-# user choice of implementation
-ifndef IMPL
-	IMPL = stack
+ifneq (,$(filter $(DEMO),$(STACK_IMPL)))
+IMPL = stack
+else ifneq (,$(filter $(DEMO),$(STACK_IMPL_STATIC)))
+IMPL = stack_static
+else ifneq (,$(filter $(DEMO),$(STACK_IMPL_LIST)))
+IMPL = stack_list
 endif
 
-# user choice of demo
-ifndef DEMO
-	DEMO = test
-endif
-
-CFLAGS += -include $(DEMOS_PATH)/$(DEMO)/demo_stack.hpp
+CFLAGS += -include $(DEMOS_PATH)/$(DEMO)/demo_stack.hpp 
 CFLAGS += -include $(IMPL).hpp
 
-# files
-BIN = $(BIN_PATH)/demo
-SRC = $(IMPL).cpp $(DEMO_SRC) 
-DEMO_SRC = $(wildcard $(DEMOS_PATH)/$(DEMO)/*.cpp)
-OBJ = $(SRC:.cpp=.o)
+SRC += $(IMPL).cpp
 
-# rules
-.PHONY: all clean
+DEMOS = $(STACK_IMPL) $(STACK_IMPL_STATIC) $(STACK_IMPL_LIST)
 
-all: clean demo
-
-demo: $(OBJ)
-	mkdir -p $(BIN_PATH)
-	$(CXX) -o $(BIN) $^ 
-
-%.o: %.cpp
-	$(CXX) $(CFLAGS) -c $< -o $@
-
-run:
-	./$(BIN)
-
-clean:
-	rm -rf $(OBJ) $(BIN_PATH) *.o
+include ../Rules.mk

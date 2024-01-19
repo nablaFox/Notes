@@ -1,19 +1,20 @@
 # Stacks
+> If, at first, you do not succeed, call it version 1.0
 
-This project provides different implementations of stacks in C++.
+Run:
 
 ```sh
-IMPL=stack
-DEMO=test
-make IMPL=$IMPL DEMO=$DEMO
+make
 ```
 
-## Available implementations 
+this will create all the executables demos inside the `bin` folder.
 
-- `stack` (default): dynamic array implementation
+## Demos
+
+- `test` basic testing demo
+
+## Implementations 
+
+- `stack`: dynamic array implementation
 - `stack_static`: static array implementation
 - `stack_list`: lists implementation
-
-## Available Demos
-
-- `test` (default): basic testing demo
