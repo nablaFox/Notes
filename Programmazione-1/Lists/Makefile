@@ -19,7 +19,7 @@ endif
 CFLAGS += -include $(DEMOS_PATH)/$(DEMO)/demo_list.hpp
 
 # files
-BIN = $(BIN_PATH)/demo
+BIN = $(BIN_PATH)/$(DEMO)
 SRC = $(IMPL).cpp $(DEMO_SRC) 
 DEMO_SRC = $(wildcard $(DEMOS_PATH)/$(DEMO)/*.cpp)
 OBJ = $(SRC:.cpp=.o)
