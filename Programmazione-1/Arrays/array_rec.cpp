@@ -58,40 +58,48 @@ void remove_at(array arr, int& size, int index) {
 	remove_at(arr, size, index + 1);
 }
 
-void merge(const array arr1, int size1, const array arr2, int size2, array arr, int& size) {
-	if (size1 + size2 > MAX_SIZE)
+void merge_helper(const array arr1, int size1, const array arr2, int size2, array arr, int index) {
+	if (index == size1 + size2)
 		return;
 
-	if (size == size1 + size2)
-		return;
-
-	if (size < size1) {
-		arr[size] = arr1[size];
-		size++;
-		merge(arr1, size1, arr2, size2, arr, size);
+	if (index < size1) {
+		arr[index] = arr1[index];
+		index++;
+		merge_helper(arr1, size1, arr2, size2, arr, index);
 		return;
 	}
 
-	arr[size] = arr2[size - size1];
-	size++;
-	merge(arr1, size1, arr2, size2, arr, size);
+	arr[index] = arr2[index - size1];
+	index++;
+	merge_helper(arr1, size1, arr2, size2, arr, index);
 }
 
-void merge_order(const array arr1, int size1, const array arr2, int size2, array arr, int& size) {
+void merge(const array arr1, int size1, const array arr2, int size2, array arr) {
 	if (size1 + size2 > MAX_SIZE)
 		return;
 
-	if (size == size1 + size2)
+	merge_helper(arr1, size1, arr2, size2, arr, 0);
+}
+
+void merge_order_helper(const array arr1, int size1, const array arr2, int size2, array arr, int index) {
+	if (index == size1 + size2)
 		return;
 
-	if (size < size1) {
-		insert_order(arr, size, arr1[size]);
-		merge_order(arr1, size1, arr2, size2, arr, size);
+	if (index < size1) {
+		insert_order(arr, index, arr1[index]);
+		merge_order_helper(arr1, size1, arr2, size2, arr, index);
 		return;
 	}
 
-	insert_order(arr, size, arr2[size - size1]);
-	merge_order(arr1, size1, arr2, size2, arr, size);
+	insert_order(arr, index, arr2[index - size1]);
+	merge_order_helper(arr1, size1, arr2, size2, arr, index);
+}
+
+void merge_order(const array arr1, int size1, const array arr2, int size2, array arr) {
+	if (size1 + size2 > MAX_SIZE)
+		return;
+
+	merge_order_helper(arr1, size1, arr2, size2, arr, 0);
 }
 
 void reverse_helper(array arr, int high, int low) {
@@ -108,7 +116,7 @@ void reverse_helper(array arr, int high, int low) {
 void reverse(array arr, int size) { reverse_helper(arr, size - 1, 0); }
 
 int linear_search(const array arr, int size, data element) {
-	if (!size || arr[size - 1] == element)
+	if (!size || !compare_data(arr[size], element))
 		return size - 1;
 
 	return linear_search(arr, size - 1, element);
@@ -120,9 +128,9 @@ int binary_search_helper(const array arr, int low, int high, data element) {
 
 	int mid = (low + high) / 2;
 
-	if (element == arr[mid])
+	if (!compare_data(arr[mid], element))
 		return mid;
-	else if (element < arr[mid])
+	else if (compare_data(arr[mid], element) > 0)
 		return binary_search_helper(arr, low, mid - 1, element);
 	else
 		return binary_search_helper(arr, mid + 1, high, element);

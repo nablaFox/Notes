@@ -14,8 +14,8 @@ void print(array, int);
 void remove_element(array, const data&, int&);
 void remove_at(array, int&, int);
 void insert_order(array, int&, const data&);
-void merge(const array, int, const array, int, array, int& size);
-void merge_order(const array, int, const array, int, array, int&);
+void merge(const array, int, const array, int, array);
+void merge_order(const array, int, const array, int, array);
 void reverse(array, int);
 
 int binary_search(const array, int, data);

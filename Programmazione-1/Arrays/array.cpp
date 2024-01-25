@@ -55,7 +55,7 @@ void insert_order(array arr, int& size, const data& data) {
 	size++;
 }
 
-void merge(const array arr1, int size1, const array arr2, int size2, array arr, int& size) {
+void merge(const array arr1, int size1, const array arr2, int size2, array arr) {
 	if (size1 + size2 > MAX_SIZE)
 		return;
 
@@ -66,13 +66,13 @@ void merge(const array arr1, int size1, const array arr2, int size2, array arr, 
 	for (int i = 0; i < size2; i++) {
 		arr[size1 - 1 + i] = arr2[i];
 	}
-
-	size = size1 + size2;
 }
 
-void merge_order(const array arr1, int size1, const array arr2, int size2, array arr, int& size) {
+void merge_order(const array arr1, int size1, const array arr2, int size2, array arr) {
 	if (size1 + size2 > MAX_SIZE)
 		return;
+
+	int size = 0;
 
 	for (int i = 0; i < size1; i++) {
 		insert_order(arr, size, arr1[i]);
@@ -94,7 +94,7 @@ void reverse(array arr, int size) {
 
 int linear_search(const array arr, int size, data element) {
 	for (int i = 0; i < size; i++) {
-		if (arr[i] == element)
+		if (!compare_data(arr[i], element))
 			return i;
 	}
 
@@ -108,13 +108,12 @@ int binary_search(const array arr, int size, data element) {
 	while (low <= high) {
 		int mid = (low + high) / 2;
 
-		if (arr[mid] == element) {
+		if (compare_data(arr[mid], element) == 0)
 			return mid;
-		} else if (arr[mid] > element) {
+		else if (compare_data(arr[mid], element) > 0)
 			high = mid - 1;
-		} else if (arr[mid] < element) {
+		else
 			low = mid + 1;
-		}
 	}
 
 	return -1;
