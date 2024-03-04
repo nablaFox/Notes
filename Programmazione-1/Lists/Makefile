@@ -1,4 +1,4 @@
-LIST_IMPL = move_biggest_smallest
+LIST_IMPL = move_biggest_smallest primarize
 LIST_IMPL_REC = test
 LIST_IMPL_CIRC = giuseppe_flavio
 
