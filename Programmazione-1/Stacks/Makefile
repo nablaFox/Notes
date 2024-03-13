@@ -1,5 +1,5 @@
-STACK_IMPL = test
-STACK_IMPL_LIST = 
+STACK_IMPL = test check_parenthesis
+STACK_IMPL_LIST = invert_file
 STACK_IMPL_STATIC = 
 
 ifneq (,$(filter $(DEMO),$(STACK_IMPL)))

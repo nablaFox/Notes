@@ -1,10 +1,11 @@
 #include <iostream>
 #include "stack.hpp"
 
-static bool empty(const stack::Stack& stack) { return stack.index == 0; }
 static bool full(const stack::Stack& stack) { return stack.index == stack::MAX_SIZE; }
 
 namespace stack {
+
+bool empty(const stack::Stack& stack) { return stack.index == 0; }
 
 void init(Stack& stack) {
 	stack.index = 0;
