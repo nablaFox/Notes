@@ -1,11 +1,12 @@
 #include <iostream>
 #include "queue.hpp"
 
-static bool empty(const queue::Queue& q) { return q.head == q.tail; }
 static int next(int index, const queue::Queue& q) { return (index + 1) % q.size; }
-static bool full(const queue::Queue& q) { return next(q.tail, q) == q.head; }
 
 namespace queue {
+
+bool full(const queue::Queue& q) { return next(q.tail, q) == q.head; }
+bool empty(const queue::Queue& q) { return q.head == q.tail; }
 
 void init(Queue& q) {
 	q.size = SIZE + 1;

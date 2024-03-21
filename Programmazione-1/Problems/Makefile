@@ -44,7 +44,7 @@ PROBLEM_SRC = $(wildcard $(PROBLEM)/*.cpp)
 SRC += $(IMPL) $(PROBLEM_SRC) 
 OBJ = $(SRC:.cpp=.o)
 
-PROBLEMS = test
+PROBLEMS = test palindrome
 
 # rules
 .PHONY: all clean run $(PROBLEMS)

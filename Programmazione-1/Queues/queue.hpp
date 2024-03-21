@@ -17,5 +17,7 @@ void print_data(const data&);
 result enqueue(Queue&, data);
 result dequeue(Queue&);
 result front(const Queue&, data&);
+bool full(const Queue&);
+bool empty(const Queue&);
 
 } // namespace queue
